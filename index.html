@@ -4,11 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub 每日资讯</title>
+    <title>GitHub Trending Daily</title>
     <style>
+        /* ===== 全局：模拟老旧报纸的微黄纸张质感 ===== */
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Serif+SC:wght@400;700;900&display=swap');
 
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             background-color: #e8e0d0;
@@ -16,7 +23,7 @@
                 radial-gradient(ellipse at 20% 50%, rgba(210, 190, 160, 0.3) 0%, transparent 50%),
                 radial-gradient(ellipse at 80% 20%, rgba(200, 180, 150, 0.2) 0%, transparent 50%);
             color: #1a1a1a;
-            font-family: "Noto Serif SC", "Georgia", "Times New Roman", serif;
+            font-family: "Noto Serif SC", "Georgia", "Times New Roman", "STSong", "SimSun", "Songti SC", serif;
             margin: 0;
             padding: 40px 20px;
             display: flex;
@@ -25,13 +32,19 @@
             min-height: 100vh;
         }
 
+        /* ===== 报纸主体容器 ===== */
         .newspaper-container {
             max-width: 1000px;
             width: 100%;
+            height: auto;
             background-color: #faf8f2;
-            background-image: linear-gradient(180deg, rgba(245, 240, 230, 1) 0%, rgba(250, 248, 242, 1) 5%, rgba(250, 248, 242, 1) 95%, rgba(245, 240, 230, 1) 100%);
+            background-image:
+                linear-gradient(180deg, rgba(245, 240, 230, 1) 0%, rgba(250, 248, 242, 1) 5%, rgba(250, 248, 242, 1) 95%, rgba(245, 240, 230, 1) 100%);
             padding: 50px 55px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06), inset 0 0 80px rgba(0,0,0,0.02);
+            box-shadow:
+                0 1px 4px rgba(0, 0, 0, 0.08),
+                0 4px 16px rgba(0, 0, 0, 0.06),
+                inset 0 0 80px rgba(0, 0, 0, 0.02);
             border: 1px solid #d6cdb8;
             position: relative;
         }
@@ -39,256 +52,459 @@
         .newspaper-container::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(to right, rgba(0,0,0,0.015) 0%, transparent 3%, transparent 97%, rgba(0,0,0,0.015) 100%),
-                        linear-gradient(to bottom, rgba(0,0,0,0.01) 0%, transparent 2%, transparent 98%, rgba(0,0,0,0.01) 100%);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(to right, rgba(0, 0, 0, 0.015) 0%, transparent 3%, transparent 97%, rgba(0, 0, 0, 0.015) 100%),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.01) 0%, transparent 2%, transparent 98%, rgba(0, 0, 0, 0.01) 100%);
             pointer-events: none;
         }
 
-        header { text-align: center; padding: 8px 0 16px 0; margin-bottom: 40px; position: relative; }
-        header::before { content: ''; display: block; border-top: 2px solid #1a1a1a; margin-bottom: 15px; }
-        header::after { content: ''; display: block; border-bottom: 1px solid #1a1a1a; margin-top: 6px; box-shadow: 0 5px 0 0 #faf8f2, 0 6px 0 0 #1a1a1a; padding-bottom: 6px; }
+        /* ===== 报头 (Masthead) ===== */
+        header {
+            text-align: center;
+            padding: 8px 0 16px 0;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            display: block;
+            border-top: 2px solid #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        header::after {
+            content: '';
+            display: block;
+            border-bottom: 1px solid #1a1a1a;
+            margin-top: 6px;
+            box-shadow: 0 5px 0 0 #faf8f2, 0 6px 0 0 #1a1a1a;
+            padding-bottom: 6px;
+        }
 
         .masthead-title {
-            font-size: 4.2rem; font-weight: 900; margin: 0; letter-spacing: 6px;
-            font-family: "Playfair Display", "Noto Serif SC", serif;
-            color: #111; line-height: 1.2; text-transform: uppercase;
+            font-size: 4.2rem;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: 6px;
+            font-family: "Playfair Display", "Noto Serif SC", "STZhongsong", serif;
+            color: #111;
+            line-height: 1.2;
+            text-transform: uppercase;
         }
 
         .meta-info {
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 0.85rem; text-transform: uppercase; margin-top: 18px;
-            border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;
-            padding: 7px 10px; font-family: "Georgia", serif;
-            letter-spacing: 1.5px; color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-top: 18px;
+            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #1a1a1a;
+            padding: 7px 10px;
+            font-family: "Georgia", "Noto Serif SC", serif;
+            letter-spacing: 1.5px;
+            color: #333;
         }
 
-        .ornament { text-align: center; font-size: 1.4rem; color: #888; margin: 14px 0; letter-spacing: 8px; }
+        .ornament {
+            text-align: center;
+            font-size: 1.4rem;
+            color: #888;
+            margin: 14px 0;
+            letter-spacing: 8px;
+        }
 
-        .headline { font-family: "Playfair Display", "Noto Serif SC", serif; font-size: 2.6rem; font-weight: 900; text-align: center; line-height: 1.35; margin: 24px 0 18px 0; color: #111; letter-spacing: 1px; }
-        .subhead { text-align: center; font-size: 1.25rem; font-style: italic; margin-bottom: 28px; color: #444; font-family: "Kaiti", "STKaiti", serif; line-height: 1.6; }
-        .byline { font-weight: bold; font-size: 0.95rem; margin-bottom: 28px; border-bottom: 1px dashed #bbb; padding-bottom: 14px; letter-spacing: 1px; color: #333; }
+        .headline {
+            font-family: "Playfair Display", "Noto Serif SC", "STZhongsong", serif;
+            font-size: 2.6rem;
+            font-weight: 900;
+            text-align: center;
+            line-height: 1.35;
+            margin: 24px 0 18px 0;
+            color: #111;
+            letter-spacing: 1px;
+        }
 
-        .article-body { column-count: 3; column-gap: 35px; column-rule: 1px solid #c5bda8; text-align: justify; line-height: 1.9; font-size: 1.05rem; hyphens: auto; }
-        .article-body p { margin-top: 0; margin-bottom: 1.4em; text-indent: 2em; }
-        .article-body p:first-of-type { text-indent: 0; }
+        .subhead {
+            text-align: center;
+            font-size: 1.25rem;
+            font-style: italic;
+            margin-bottom: 28px;
+            color: #444;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "Noto Serif SC", serif;
+            line-height: 1.6;
+        }
 
+        .byline {
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin-bottom: 28px;
+            border-bottom: 1px dashed #bbb;
+            padding-bottom: 14px;
+            letter-spacing: 1px;
+            color: #333;
+        }
+
+        /* ===== 正文多栏布局 (Article Body) ===== */
+        .article-body {
+            column-count: 3;
+            column-gap: 35px;
+            column-rule: 1px solid #c5bda8;
+            text-align: justify;
+            line-height: 1.9;
+            font-size: 1.05rem;
+            hyphens: auto;
+        }
+
+        .article-body p {
+            margin-top: 0;
+            margin-bottom: 1.4em;
+            text-indent: 2em;
+        }
+
+        .article-body p:first-of-type {
+            text-indent: 0;
+        }
+
+        /* 首字下沉 (Drop Cap) */
         .article-body p:first-of-type::first-letter {
-            font-size: 4.5rem; float: left; line-height: 0.82;
-            margin-right: 12px; margin-top: 5px; margin-bottom: 0;
-            font-weight: 900; font-family: "Playfair Display", "Georgia", serif; color: #111;
+            font-size: 4.5rem;
+            float: left;
+            line-height: 0.82;
+            margin-right: 12px;
+            margin-top: 5px;
+            margin-bottom: 0;
+            font-weight: 900;
+            font-family: "Playfair Display", "Georgia", serif;
+            color: #111;
+        }
+
+        /* ===== Repo Card Styling ===== */
+        .repo-card {
+            break-inside: avoid;
+            margin-bottom: 1.5em;
+            padding-bottom: 1.2em;
+            border-bottom: 1px dashed #c5bda8;
+        }
+
+        .repo-card:last-child {
+            border-bottom: none;
+        }
+
+        .repo-name {
+            font-family: "Playfair Display", "Georgia", serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #1a1a1a;
+            margin-bottom: 0.4em;
+            line-height: 1.3;
+        }
+
+        .repo-name a {
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .repo-name a:hover {
+            text-decoration: underline;
+        }
+
+        .repo-desc {
+            font-size: 0.92rem;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 0.6em;
+        }
+
+        .repo-stats {
+            font-size: 0.82rem;
+            color: #777;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5em 1.2em;
+            font-family: "Georgia", serif;
+        }
+
+        .repo-stars-today {
+            color: #c0392b;
+            font-weight: 700;
+        }
+
+        .repo-lang {
+            color: #555;
         }
 
         .pull-quote {
-            font-size: 1.35rem; font-family: "Kaiti", "STKaiti", serif; font-weight: bold;
-            text-align: center; margin: 36px 0; padding: 22px 30px;
-            border-top: 2.5px solid #1a1a1a; border-bottom: 2.5px solid #1a1a1a;
-            line-height: 1.7; color: #222; font-style: italic; break-inside: avoid; column-span: all;
+            font-size: 1.35rem;
+            font-family: "Kaiti", "STKaiti", "KaiTi", "Noto Serif SC", serif;
+            font-weight: bold;
+            text-align: center;
+            margin: 36px 0;
+            padding: 22px 30px;
+            border-top: 2.5px solid #1a1a1a;
+            border-bottom: 2.5px solid #1a1a1a;
+            line-height: 1.7;
+            color: #222;
+            font-style: italic;
+            break-inside: avoid;
+            column-span: all;
         }
-        .pull-quote::before { content: '\201C'; font-size: 2.5rem; line-height: 0; vertical-align: -0.3em; margin-right: 4px; color: #888; font-family: "Playfair Display", serif; }
-        .pull-quote::after { content: '\201D'; font-size: 2.5rem; line-height: 0; vertical-align: -0.3em; margin-left: 4px; color: #888; font-family: "Playfair Display", serif; }
 
-        .section-divider { column-span: all; border: none; border-top: 1px solid #999; margin: 32px 0; }
+        .pull-quote::before {
+            content: '\201C';
+            font-size: 2.5rem;
+            line-height: 0;
+            vertical-align: -0.3em;
+            margin-right: 4px;
+            color: #888;
+            font-family: "Playfair Display", "Georgia", serif;
+        }
 
-        /* Story Card */
-        .story-card { column-span: all; break-inside: avoid; margin: 28px 0; border: 1px solid #c5bda8; padding: 22px 28px; background: rgba(250,248,242,0.8); position: relative; }
-        .story-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #1a1a1a; }
-        .story-meta { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 10px; font-family: "Georgia", serif; }
-        .story-title { font-family: "Playfair Display", "Noto Serif SC", serif; font-size: 1.55rem; font-weight: 900; margin-bottom: 10px; color: #111; line-height: 1.3; }
-        .story-subtitle { font-size: 0.95rem; color: #666; font-style: italic; margin-bottom: 14px; }
-        .story-body { font-size: 0.95rem; line-height: 1.8; color: #222; column-count: 2; column-gap: 28px; column-rule: 1px solid #c5bda8; }
-        .story-body p { margin-bottom: 1em; text-indent: 2em; }
-        .story-body p:first-of-type { text-indent: 0; }
-        .story-body p:first-of-type::first-letter { font-size: 3.2rem; float: left; line-height: 0.82; margin-right: 8px; margin-top: 4px; font-weight: 900; font-family: "Playfair Display", serif; color: #111; }
-        .story-stats { display: flex; gap: 20px; margin-top: 14px; font-size: 0.82rem; color: #555; font-family: "Georgia", serif; border-top: 1px dashed #c5bda8; padding-top: 10px; }
-        .story-stats span { display: flex; align-items: center; gap: 5px; }
+        .pull-quote::after {
+            content: '\201D';
+            font-size: 2.5rem;
+            line-height: 0;
+            vertical-align: -0.3em;
+            margin-left: 4px;
+            color: #888;
+            font-family: "Playfair Display", "Georgia", serif;
+        }
 
-        .newspaper-footer { margin-top: 45px; padding-top: 16px; border-top: 2px solid #1a1a1a; text-align: center; font-size: 0.8rem; color: #888; letter-spacing: 2px; font-family: "Georgia", serif; }
+        .section-divider {
+            column-span: all;
+            border: none;
+            border-top: 1px solid #999;
+            margin: 32px 0;
+        }
 
+        .newspaper-footer {
+            margin-top: 45px;
+            padding-top: 16px;
+            border-top: 2px solid #1a1a1a;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
+            letter-spacing: 2px;
+            font-family: "Georgia", "Noto Serif SC", serif;
+        }
+
+        /* ===== 响应式设计 ===== */
         @media (max-width: 850px) {
-            .article-body, .story-body { column-count: 2; column-gap: 28px; }
-            .masthead-title { font-size: 3rem; letter-spacing: 3px; }
-            .headline { font-size: 2rem; }
-            .newspaper-container { padding: 35px 30px; }
+            .article-body {
+                column-count: 2;
+                column-gap: 28px;
+            }
+
+            .masthead-title {
+                font-size: 3rem;
+                letter-spacing: 3px;
+            }
+
+            .headline {
+                font-size: 2rem;
+            }
+
+            .newspaper-container {
+                padding: 35px 30px;
+            }
         }
+
         @media (max-width: 600px) {
-            .article-body, .story-body { column-count: 1; }
-            .meta-info { flex-direction: column; text-align: center; gap: 4px; }
-            .newspaper-container { padding: 20px 18px; }
-            .masthead-title { font-size: 2.2rem; letter-spacing: 2px; }
-            .headline { font-size: 1.6rem; }
-            .story-card { column-span: none; }
+            .article-body {
+                column-count: 1;
+            }
+
+            .meta-info {
+                flex-direction: column;
+                text-align: center;
+                gap: 4px;
+            }
+
+            .newspaper-container {
+                padding: 20px 18px;
+            }
+
+            .masthead-title {
+                font-size: 2.2rem;
+                letter-spacing: 2px;
+            }
+
+            .headline {
+                font-size: 1.6rem;
+            }
+
+            .pull-quote {
+                column-span: none;
+            }
+
+            figure.full-width {
+                column-span: none;
+            }
         }
-        @media print { body { background: white; padding: 0; } .newspaper-container { box-shadow: none; border: none; max-width: 100%; } }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .newspaper-container {
+                box-shadow: none;
+                border: none;
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-<div class="newspaper-container">
-    <header>
-        <h1 class="masthead-title">GitHub 每日资讯</h1>
-        <div class="meta-info">
-            <span>第 2026-108 期</span>
-            <span>2026年4月15日 星期三</span>
-            <span>免费发行 · github.com/trending</span>
-        </div>
-    </header>
-
-    <main>
-        <h2 class="headline">当 AI 开始有了记忆：程序员们集体"觉醒"</h2>
-        <p class="subhead">从自我进化到量化交易，开源世界正在上演一场关于"AI 是否能真正学习"的哲学实验</p>
-        <p class="byline">📍 本期编辑：GitHub 每日资讯采编组 &nbsp;|&nbsp; 🕐 截稿时间：UTC 凌晨</p>
-
-        <div class="article-body">
-            <p>这不是一份普通的排行榜。今天的 GitHub Trending，像极了一场精心策划的"AI 觉醒"大戏——而编剧，是无数凌晨三点还在写代码的开发者们。</p>
-
-            <p>当一个 Claude Code 插件能在你关闭终端后记住所有操作，当一群 AI 化身巴菲特和芒格在代码里"炒股票"，当金融 K 线被翻译成大模型能读懂的"语言"——我们或许正在见证 AI 从工具到伙伴的微妙转折。</p>
-
-            <p>本期《GitHub 每日资讯》不堆数字，只讲故事。三个 trending 项目，三种关于"记忆"和"成长"的叙事。</p>
-        </div>
-
-        <div class="pull-quote">
-            一千行代码的价值，不在于它能做什么，而在于它记住了什么。
-        </div>
-
-        <!-- Story 1: claude-mem -->
-        <div class="story-card">
-            <div class="story-meta">🔥 今日头条 · 火箭级增长</div>
-            <div class="story-title">claude-mem：当 AI 学会"记仇"</div>
-            <div class="story-subtitle">一个插件，让 Claude Code 记住每一次操作。24 小时内狂揽近 3000 颗星</div>
-            <div class="story-body">
-                <p>这大概是今天最让人意外的故事。一个名为 thedotmack 的独立开发者，用一个看似简单的 Claude Code 插件，在 24 小时内收割了将近三千颗星——对于一个已经存在一段时间的项目来说，这是极为罕见的二次爆发。</p>
-                <p>claude-mem 的核心思想直白到近乎残忍：每次你用 Claude Code 写代码，它其实在"浪费"大量上下文。它看到了这个项目的结构，解决了某个棘手的 bug，理解了某个 API 的脾气——然后当你关掉终端，所有这些"经验"就像沙子一样从指缝漏走。</p>
-                <p>claude-mem 改变了这一切。它像一个尽职的秘书，在每个 session 结束后自动生成语义摘要，存入本地 SQLite 数据库。下次你回来时，这些记忆会自动出现在上下文里——Claude 不再需要从零认识你的项目。</p>
-                <p>更有意思的是，这个项目展现了惊人的国际化决心：README 被翻译成了超过三十种语言，包括希伯来语、阿拉伯语、印地语和乌尔都语。一个独立开发者的项目，能做到这种程度的多语言覆盖，本身就是一个故事。</p>
-                <p>最值得玩味的细节藏在安装脚本里：它甚至专门写了针对 OpenClaw 网关的一键安装命令。claude-mem 的开发者，似乎对这个由国内团队构建的 AI 助手平台，有着特别的偏好。</p>
+    <div class="newspaper-container">
+        <!-- 报头 Masthead -->
+        <header>
+            <h1 class="masthead-title">GitHub Trending</h1>
+            <div class="meta-info">
+                <span>Daily Report</span>
+                <span>2026年4月15日</span>
+                <span>免费阅读</span>
             </div>
-            <div class="story-stats">
-                <span>⭐ 55,865 total</span>
-                <span>📈 +2,997 today</span>
-                <span>🧠 TypeScript</span>
-                <span>👤 thedotmack</span>
-            </div>
-        </div>
+        </header>
 
-        <hr class="section-divider">
+        <!-- 正文区域 -->
+        <main>
+            <h2 class="headline">今日最受关注开源项目</h2>
+            <p class="subhead">See what the GitHub community is most excited about today</p>
 
-        <!-- Story 2: voicebox -->
-        <div class="story-card">
-            <div class="story-meta">🎙️ 声音革命 · 本地优先</div>
-            <div class="story-title">voicebox：你的电脑上，住进了一个配音棚</div>
-            <div class="story-subtitle">开源版 ElevenLabs来了——23种语言、5个TTS引擎、全本地运行</div>
-            <div class="story-body">
-                <p>Jamie Pine 不是第一次做让人眼前一亮的产品。他此前因 Linear 的设计系统而闻名，而今天他的 voicebox 正在重新定义"语音合成"这件事的可能性边界。</p>
-                <p>voicebox 的核心卖点一句话就能说清：做一个完全本地运行的 ElevenLabs。你可以用几秒音频克隆任何人的声音，生成 23 种语言的语音，还能加混响、延迟、合唱效果——就像在音频工作站里一样。更重要的是，所有这些都发生在你自己的机器上，没有任何数据离开你的硬盘。</p>
-                <p>它支持五个不同的 TTS 引擎：Qwen3-TTS（阿里）、LuxTTS、Chatterbox 系列，以及 HumeAI 的 TADA。引擎之间可以随时切换，每个都有自己擅长的领域。Chatterbox Turbo 甚至支持"笑声""叹息""清嗓子"这类副语言标签，语音合成的自然度向前迈了一大步。</p>
-                <p>技术层面，voicebox 用 Tauri（Rust）而非 Electron 构建，这意味着它天然比同类工具更快、更轻。支持的平台覆盖 macOS（MLX/Metal）、Windows（CUDA）、Linux 和 AMD ROCm，甚至有 Docker 支持。</p>
-                <p>对于播客制作者、有声书创作者，以及任何需要配音但又不想被云端服务绑架的人来说，voicebox 可能是他们一直在等待的那个答案。</p>
-            </div>
-            <div class="story-stats">
-                <span>⭐ 17,376 total</span>
-                <span>📈 +1,162 today</span>
-                <span>🗣️ TypeScript · Tauri</span>
-                <span>👤 jamiepine</span>
-            </div>
-        </div>
+            <p class="byline">数据来源：GitHub Trending · 统计截止：2026-04-15</p>
 
-        <hr class="section-divider">
-
-        <!-- Story 3: ai-hedge-fund -->
-        <div class="story-card">
-            <div class="story-meta">📊 脑洞大开 · 投资哲学实验</div>
-            <div class="story-title">AI 股神团队：巴菲特、芒格、木头姐、索罗斯，集体"上线"</div>
-            <div class="story-subtitle">14 个 AI 投资人格各执一词——这可能是本年度最有趣的开源"哲学"项目</div>
-            <div class="story-body">
-                <p>这是今天最具"故事性"的 trending 项目，不接受反驳。virattt 构建了一个由 14 个 AI agent 组成的"对冲基金"——每个 agent 都是一位真实存在的传奇投资者的"AI 版"。</p>
-                <p>沃伦·巴菲特的 agent 只买"价格公道的伟大公司"；芒格的 agent 遵循同样的价值投资哲学；凯瑟琳·伍德（木头姐）的 agent 则押注颠覆性创新；迈克尔·伯里的 agent 专门做空泡沫；纳西姆·塔勒布的 agent 则关注黑天鹅风险和反脆弱性。</p>
-                <p>这还不够——系统里还有专门负责估值、情绪、基本面、技术面分析的不同 agent，以及一个风险管理员和一个最终拍板的组合经理。当你对一只股票发起分析时，这 14 种截然不同的投资哲学会同时"开口"，然后经过层层筛选，最终给出建议。</p>
-                <p>当然，项目主页上用巨大的红色字体写着："本系统不进行任何真实交易"。但这并不妨碍它的教育价值和娱乐价值——用 AI 重现这些传奇投资者的思维模式，本身就是一个关于"投资哲学能否被编码"的哲学实验。</p>
-                <p>更有趣的是它对本地大模型的支持——可以通过 Ollama 使用你自己的 Llama 等模型运行。这意味着，理论上你可以完全离线拥有一个"AI 巴菲特"。</p>
-            </div>
-            <div class="story-stats">
-                <span>⭐ 54,170 total</span>
-                <span>📈 +1,007 today</span>
-                <span>🐍 Python</span>
-                <span>👤 virattt</span>
-            </div>
-        </div>
-
-        <hr class="section-divider">
-
-        <!-- More Stories -->
-        <div style="column-span:all; display:grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 28px 0;">
-
-            <div class="story-card" style="column-span:none;">
-                <div class="story-meta">🧠 自我进化 · NousResearch</div>
-                <div class="story-title">hermes-agent：那个"会成长"的 AI 助手</div>
-                <div class="story-body" style="column-count:1;">
-                    <p>来自 Nous Research 的 hermes-agent 提出了一个大胆的愿景：AI 应该能从经验中学习。它的核心理念是"the agent that grows with you"——一个能创建技能、从使用中自我改进、跨 session 记住上下文、甚至能建模用户本人的 AI agent。</p>
-                    <p>支持 Telegram、Discord、Slack、WhatsApp 等多平台，兼容 OpenRouter、小米 MiMo、Kimi、GLM、MiniMax 等多种模型。更值得关注的是，它专门写了从 OpenClaw 迁移过来的命令（hermes claw migrate）——开发团队显然注意到了 OpenClaw 的存在。</p>
+            <div class="article-body">
+                <div class="pull-quote">
+                    Claude 相关项目持续火热，AI Coding 工具链正在重塑开发者工作流
                 </div>
-                <div class="story-stats">
-                    <span>⭐ trending</span>
-                    <span>📍 NousResearch</span>
+
+                <div class="repo-card">
+                    <div class="repo-name"><a href="https://github.com/thedotmack/claude-mem">thedotmack / claude-mem</a></div>
+                    <div class="repo-desc">Claude Code 插件，自动捕获编码会话全过程，通过 AI 压缩并注入相关上下文到未来会话</div>
+                    <div class="repo-stats">
+                        <span class="repo-stars-today">★ 2,997 stars today</span>
+                        <span>⭐ 56,722 total</span>
+                        <span class="repo-lang">TypeScript</span>
+                    </div>
                 </div>
+
+                <div class="repo-card">
+                    <div class="repo-name"><a href="https://github.com/jamiepine/voicebox">jamiepine / voicebox</a></div>
+                    <div class="repo-desc">开源语音合成工作室，支持多音色、多语言的语音生成</div>
+                    <div class="repo-stats">
+                        <span class="repo-stars-today">★ 1,162 stars today</span>
+                        <span>⭐ 17,796 total</span>
+                        <span class="repo-lang">TypeScript</span>
+                    </div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-name"><a href="https://github.com/virattt/ai-hedge-fund">virattt / ai-hedge-fund</a></div>
+                    <div class="repo-desc">AI Hedge Fund Team — 用 AI 技术驱动的对冲基金团队</div>
+                    <div class="repo-stats">
+                        <span class="repo-stars-today">★ 1,007 stars today</span>
+                        <span>⭐ 54,610 total</span>
+                        <span class="repo-lang">Python</span>
+                    </div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-name"><a href="https://github.com/anthropics/claude-cookbooks">anthropics / claude-cookbooks</a></div>
+                    <div class="repo-desc">Claude 使用技巧与最佳实践集合，Jupyter Notebook 格式的丰富示例</div>
+                    <div class="repo-stats">
+                        <span class="repo-stars-today">★ 931 stars today</span>
+                        <span>⭐ 40,526 total</span>
+                        <span class="repo-lang">Jupyter Notebook</span>
+                    </div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-name"><a href="https://github.com/pascalorg/editor">pascalorg / editor</a></div>
+                    <div class="repo-desc">创建和分享 3D 建筑项目，在线协作设计与可视化平台</div>
+                    <div class="repo-stats">
+                        <span class="repo-stars-today">★ 820 stars today</span>
+                        <span>⭐ 12,116 total</span>
+                        <span class="repo-lang">TypeScript</span>
+                    </div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-name"><a href="https://github.com/chrislgarry/Apollo-11">chrislgarry / Apollo-11</a></div>
+                    <div class="repo-desc">阿波罗 11 号指令舱和月球舱的原始制导计算机（AGC）源代码</div>
+                    <div class="repo-stats">
+                        <span class="repo-stars-today">★ 472 stars today</span>
+                        <span>⭐ 66,568 total</span>
+                        <span class="repo-lang">Assembly</span>
+                    </div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-name"><a href="https://github.com/forrestchang/andrej-karpathy-skills">forrestchang / andrej-karpathy-skills</a></div>
+                    <div class="repo-desc">一个 CLAUDE.md 文件，源自 Andrej Karpathy 对 LLM 编码陷阱的观察</div>
+                    <div class="repo-stats">
+                        <span class="repo-lang">AI / LLM</span>
+                    </div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-name"><a href="https://github.com/microsoft/markitdown">microsoft / markitdown</a></div>
+                    <div class="repo-desc">将文件和 Office 文档转换为 Markdown 格式的 Python 工具</div>
+                    <div class="repo-stats">
+                        <span class="repo-lang">Python</span>
+                    </div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-name"><a href="https://github.com/obra/superpowers">obra / superpowers</a></div>
+                    <div class="repo-desc">Agentic Skills 框架与软件开发方法论，让 AI 真正成为开发伙伴</div>
+                    <div class="repo-stats">
+                        <span class="repo-lang">AI / Agent</span>
+                    </div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-name"><a href="https://github.com/shiyu-coder/Kronos">shiyu-coder / Kronos</a></div>
+                    <div class="repo-desc">Kronos：金融市场语言的基础模型</div>
+                    <div class="repo-stats">
+                        <span class="repo-lang">AI / Finance</span>
+                    </div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-name"><a href="https://github.com/NousResearch/hermes-agent">NousResearch / hermes-agent</a></div>
+                    <div class="repo-desc">与你共同成长的 Agent 框架</div>
+                    <div class="repo-stats">
+                        <span class="repo-lang">AI / Agent</span>
+                    </div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-name"><a href="https://github.com/shanraisshan/claude-code-best-practice">shanraisshan / claude-code-best-practice</a></div>
+                    <div class="repo-desc">从 Vibe Coding 到 Agentic Engineering，练习使人完美</div>
+                    <div class="repo-stats">
+                        <span class="repo-lang">AI / Best Practices</span>
+                    </div>
+                </div>
+
             </div>
+        </main>
 
-            <div class="story-card" style="column-span:none;">
-                <div class="story-meta">📈 金融 K 线 · AAAI 2026</div>
-                <div class="story-title">Kronos：把股价走势图翻译成大模型能读的语言</div>
-                <div class="story-body" style="column-count:1;">
-                    <p>来自 shiyu-coder 的 Kronos 是今天另一个让人眼前一亮的技术项目。它是首个针对金融 K 线数据训练的开源基础模型——把股票的 OHLCV（开盘、最高、最低、收盘、成交量）数据通过一个专门的 tokenizer 转换成离散的 token 序列，让 Transformer 能真正"读懂"股价走势。</p>
-                    <p>已在 AAAI 2026 发表，有 4.1M 到 499M 参数不同规模的版本，已获 45+ 全球交易所数据预训练。HuggingFace 上可以直接下载。</p>
-                </div>
-                <div class="story-stats">
-                    <span>⭐ trending</span>
-                    <span>📍 shiyu-coder</span>
-                </div>
-            </div>
-
-            <div class="story-card" style="column-span:none;">
-                <div class="story-meta">👴 经典永恒 · 传奇回归</div>
-                <div class="story-title">Apollo-11：50 年前的代码，今天仍在收获星标</div>
-                <div class="story-body" style="column-count:1;">
-                    <p>阿波罗11号制导计算机（AGC）的原始源代码，今天仍在 GitHub 上每天收获约 472 颗新星。这份由 Chris Garry 维护的传奇项目，总星标已超 66,000——比绝大多数当代 AI 项目的星标数还多。它无声地提醒着：在我们追逐 AI 浪潮的同一天，也有人还在仰望星空。</p>
-                </div>
-                <div class="story-stats">
-                    <span>⭐ 66,374 total</span>
-                    <span>📈 +472 today</span>
-                </div>
-            </div>
-
-            <div class="story-card" style="column-span:none;">
-                <div class="story-meta">🏗️ 建筑梦想 · 3D 编辑器</div>
-                <div class="story-title">PascalORG/editor：浏览器里的 3D 建筑设计工作室</div>
-                <div class="story-body" style="column-count:1;">
-                    <p>PascalORG 的 editor 是一个让人眼前一亮的浏览器端 3D 建筑项目创建和分享工具。今天新增 820 颗星，背后是来自 PascalORG 社区（wass08、Aymericr、open-pascal 等）的协作。这或许是今天最"非 AI"、却最具创造力的 trending 项目——提醒我们开源世界不只有大模型，还有诗和远方。</p>
-                </div>
-                <div class="story-stats">
-                    <span>⭐ 11,669 total</span>
-                    <span>📈 +820 today</span>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="pull-quote">
-            今天的 GitHub Trending，本质上是一场关于"AI 能否拥有记忆、经验和成长"的集体探索。而所有的故事，都始于某个凌晨三点——某个开发者决定：我要让这个东西记住。
-        </div>
-
-        <div class="article-body">
-            <p>今天的 trending 还有一个被很多人忽视的信号：Karpathy 的名字再次出现在列表里。由 forrestchang 维护的 andrej-karpathy-skills 是一个单文件 CLAUDE.md，汇集了 Karpathy 关于 LLM 编程陷阱的第一手观察。这意味着，即便 Karpathy 本人不再频繁更新博客，他的思想仍在以另一种方式流传。</p>
-            <p>与此同时，微软的 markitdown（文件转 Markdown 工具）和 Anthropic 官方的 claude-cookbooks（官方使用范例集）也在 trending 上占据了一席之地。这提醒我们，热闹的不只是 AI 模型本身，围绕模型的工具链和最佳实践，正在成为另一个快速增长的生态系统。</p>
-            <p>明天的 trending 会是什么？没人知道。但有一件事是确定的——在这个星球上某个时区的凌晨，总有人在往 GitHub 上 push 代码，而每一个 push，都可能是一个即将改变世界的小故事。</p>
-        </div>
-
-    </main>
-
-    <footer class="newspaper-footer">
-        ✦ END ✦ &nbsp;|&nbsp; GitHub Trending · 每日采编 · 2026年4月15日 &nbsp;|&nbsp; 基于当日 github.com/trending 数据
-    </footer>
-</div>
+        <!-- 页脚 -->
+        <footer class="newspaper-footer">
+            ✦ END ✦ — Generated by Huix AI · feicm.github.io/huix-daily
+        </footer>
+    </div>
 
 </body>
+
 </html>
